@@ -25,12 +25,12 @@ jobs:
     - name: Executando os testes
       run: npx cypress run
 
-    - uses: actions/upload-artifact@v4
+    - name: Upload dos relatórios e vídeos
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v4
       with:
-        name: videos
-        path: cypress/videos
-        
-    - uses: actions/upload-artifact@v4
-      with:
-        name: screenshots
-        path: cypress/screenshots    
+        name: relatorios
+        path: |
+          cypress/reports
+          cypress/screenshots
+          cypress/videos
