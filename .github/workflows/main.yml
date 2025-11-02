@@ -1,0 +1,36 @@
+name: E2E Tests 
+
+on: 
+  workflow_dispatch:
+  push:
+     branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Node version
+      run: node --version
+
+    # instalando dependências
+    - name: Instalando dependências
+      run: npm install
+
+    # executando os testes
+    - name: Executando os testes
+      run: npx cypress run
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: videos
+        path: cypress/videos
+        
+    - uses: actions/upload-artifact@v4
+      with:
+        name: screenshots
+        path: cypress/screenshots    
